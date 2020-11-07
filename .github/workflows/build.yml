@@ -24,6 +24,10 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
 
+    steps:
+
+    - name: Ping host server
+      run: ping ${{ secrets.HOSTNAME }}
     # - name: Copy file via ssh
     #   uses: appleboy/scp-action@master
     #   with:
