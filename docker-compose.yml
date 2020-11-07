@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+
+  websockets:
+    build: "."
+    ports:
+      - "3000:3000"
+    expose:
+      - 3000
+    networks:
+      - default
+    environment:
+      - PORT=3000
+    depends_on:
+      - mongodb
+    restart: on-failure
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-websockets
+    expose:
+      - 27027
+      - 35496
+    ports:
+      - "27027:27027"
+    restart: on-failure
+    volumes:
+      - mongo-volume:/data/db
+    networks:
+      - default
+    environment:
+      - PORT=27027
+
+networks:
+  default:
+
+volumes:
+  mongo-volume:

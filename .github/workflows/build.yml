@@ -1,0 +1,45 @@
+name: Build CI
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+    - 'README.md'
+    - 'docs/**'
+
+jobs:
+  build:
+
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build
+      run: docker-compose up --build -d
+
+  deploy:
+
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    # - name: Copy file via ssh
+    #   uses: appleboy/scp-action@master
+    #   with:
+    #     host: ${{ secrets.HOSTNAME }}
+    #     username: ${{ secrets.USERNAME }}
+    #     password: ${{ secrets.PASSWORD }}
+    #     port: 22
+    #     source: "."
+    #     target: "WebsocketServer"
+    #
+    # - name: Executing remote ssh commands
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{ secrets.HOSTNAME }}
+    #     username: ${{ secrets.USERNAME }}
+    #     password: ${{ secrets.PASSWORD }}
+    #     command_timeout: 10m
+    #     script: |
+    #       ./run.sh
